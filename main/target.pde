@@ -22,7 +22,7 @@ class Square{
   }
   
   void draw_square(float distortion){
-     color colour = this.target ? color(255, 255, 0) : color(0, 255, 0);
+     color colour = this.target ? color(0, 255, 0) : color(255, 255, 0);
      fill(colour);
      
      int fish_x1 = _fish_eye_transform(this.x1, width/2, distortion);

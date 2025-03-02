@@ -42,6 +42,8 @@ void generateSquares() {
     }
     attempts++;
   }
+  int target= int(random(0, NUM_SQUARES));
+  squares.get(target).set_as_target();
 }
 
 boolean rectsOverlap(float x1, float y1, int s1, float x2, float y2, int s2) {
