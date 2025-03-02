@@ -1,4 +1,4 @@
-int NUM_SQUARES = 30;
+int NUM_SQUARES =30;
 
 int MIN_SQUARE_SIZE=20;
 int MAX_SQUARE_SIZE=100;
@@ -16,7 +16,7 @@ void draw() {
   
   for (int i = 0; i < NUM_SQUARES; i++) {
     //FIXME: where to define distortion level.
-    squares.get(i).draw_square(3);
+    squares.get(i).draw_square(0);
   }
 }
 

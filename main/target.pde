@@ -21,21 +21,20 @@ class Square{
     this.target = false;
   }
   
-  void draw_square(int distortion){
+  void draw_square(float distortion){
      color colour = this.target ? color(255, 255, 0) : color(0, 255, 0);
      fill(colour);
      
-     //int fish_x1 = _fish_eye_transform(this.x1, width/2, distortion);
-     //int fish_y1 = _fish_eye_transform(this.y1, height/2, distortion);
-     //int fish_x2 = _fish_eye_transform(this.x2, width/2, distortion);
-     //int fish_y2 = _fish_eye_transform(this.y2, height/2, distortion);
-     //int fish_x3 = _fish_eye_transform(this.x3, width/2, distortion);
-     //int fish_y3 = _fish_eye_transform(this.y3, height/2, distortion);
-     //int fish_x4 = _fish_eye_transform(this.x4, width/2, distortion);
-     //int fish_y4 = _fish_eye_transform(this.y4, height/2, distortion);
+     int fish_x1 = _fish_eye_transform(this.x1, width/2, distortion);
+     int fish_y1 = _fish_eye_transform(this.y1, height/2, distortion);
+     int fish_x2 = _fish_eye_transform(this.x2, width/2, distortion);
+     int fish_y2 = _fish_eye_transform(this.y2, height/2, distortion);
+     int fish_x3 = _fish_eye_transform(this.x3, width/2, distortion);
+     int fish_y3 = _fish_eye_transform(this.y3, height/2, distortion);
+     int fish_x4 = _fish_eye_transform(this.x4, width/2, distortion);
+     int fish_y4 = _fish_eye_transform(this.y4, height/2, distortion);
 
-    // quad(fish_x1, fish_y1, fish_x2, fish_y2, fish_x3, fish_y3, fish_x4, fish_y4);
-    quad(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
+     quad(fish_x1, fish_y1, fish_x2, fish_y2, fish_x3, fish_y3, fish_x4, fish_y4);
 
   }
 
@@ -44,28 +43,30 @@ class Square{
   }
   
 
-  int _fish_eye_transform(int p, int f, int distortion){
-    int r=0;
-    int maxDiff=0;
+  int _fish_eye_transform(int p, int f, float distortion){
+    float r=0;
+    float maxDiff=0;
+    
     if(p<f){
-      maxDiff = f;
+      maxDiff = float(f);
     }else{
-      maxDiff = width - f;
+      maxDiff = float(width - f);
     }
-
-    int d = abs(p - f);
-    int g = 1; 
+   
+    float d = abs(float(p) - float(f));
+    float g=0;
     if(d > 0){
-      g = (distortion +1)/(distortion + maxDiff / d); //CHECK ORDER OF OPERATIONS HERE?
+     g = (distortion +1)/(distortion + maxDiff / d); //CHECK ORDER OF OPERATIONS HERE?
     }
     
     if(p == f){
       r = p;
     }else if(p > f){
-      r = f + (g * maxDiff); 
+      r = f + g * maxDiff; 
     }else{
-      r = f - (g * maxDiff);
+      r = f - g * maxDiff;
     }
-    return r;
+
+    return int(r);
   }
 }
