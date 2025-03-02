@@ -1,26 +1,71 @@
 class Square{
-
-  int w;
-  int h;
-  int x;
-  int y;
+  int x1;
+  int y1;
+  int x2;
+  int y2;
+  int x3;
+  int y3;
+  int x4;
+  int y4;
   boolean target;
   
-  Square(int X, int Y, int W, int H){
-    this.x = X;
-    this.y = Y;
-    this.w = W;
-    this.h = H;
+  Square(int X1, int Y1, int X2, int Y2, int X3, int Y3, int X4, int Y4){
+    this.x1 = X1;
+    this.y1 = Y1;
+    this.x2 = X2;
+    this.y2 = Y2;
+    this.x3 = X3;
+    this.y3 = Y3;
+    this.x4 = X4;
+    this.y4 = Y4;
     this.target = false;
   }
   
-  void draw_square(){
+  void draw_square(int distortion){
      color colour = this.target ? color(255, 255, 0) : color(0, 255, 0);
      fill(colour);
-     rect(this.x, this.y, this.w, this.h);
+     
+     //int fish_x1 = _fish_eye_transform(this.x1, width/2, distortion);
+     //int fish_y1 = _fish_eye_transform(this.y1, height/2, distortion);
+     //int fish_x2 = _fish_eye_transform(this.x2, width/2, distortion);
+     //int fish_y2 = _fish_eye_transform(this.y2, height/2, distortion);
+     //int fish_x3 = _fish_eye_transform(this.x3, width/2, distortion);
+     //int fish_y3 = _fish_eye_transform(this.y3, height/2, distortion);
+     //int fish_x4 = _fish_eye_transform(this.x4, width/2, distortion);
+     //int fish_y4 = _fish_eye_transform(this.y4, height/2, distortion);
+
+    // quad(fish_x1, fish_y1, fish_x2, fish_y2, fish_x3, fish_y3, fish_x4, fish_y4);
+    quad(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
+
   }
 
   void set_as_target(){
     this.target = true;
+  }
+  
+
+  int _fish_eye_transform(int p, int f, int distortion){
+    int r=0;
+    int maxDiff=0;
+    if(p<f){
+      maxDiff = f;
+    }else{
+      maxDiff = width - f;
+    }
+
+    int d = abs(p - f);
+    int g = 1; 
+    if(d > 0){
+      g = (distortion +1)/(distortion + maxDiff / d); //CHECK ORDER OF OPERATIONS HERE?
+    }
+    
+    if(p == f){
+      r = p;
+    }else if(p > f){
+      r = f + (g * maxDiff); 
+    }else{
+      r = f - (g * maxDiff);
+    }
+    return r;
   }
 }

@@ -15,7 +15,8 @@ void draw() {
   noStroke();
   
   for (int i = 0; i < NUM_SQUARES; i++) {
-    squares.get(i).draw_square();
+    //FIXME: where to define distortion level.
+    squares.get(i).draw_square(3);
   }
 }
 
@@ -25,12 +26,12 @@ void generateSquares() {
     int s = int(random(MIN_SQUARE_SIZE, MAX_SQUARE_SIZE));
     int x = int(random(width - s));
     int y = int(random(height - s));
-    Square newSquare = new Square(x, y, s, s);
+    Square newSquare = new Square(x, y, x+s, y, x+s, y+s, x, y+s);
     
     boolean overlaps = false;
     for (int i = 0; i < squares.size(); i++) {
       Square existing = squares.get(i);
-      if (rectsOverlap(newSquare.x, newSquare.y, s, existing.x, existing.y, existing.w)) {
+      if (rectsOverlap(newSquare.x1, newSquare.y1, s, existing.x1, existing.y1, existing.x2-existing.x1)) {
         overlaps = true;
         break;
       }
