@@ -87,9 +87,9 @@ void mouseClicked() {
             currentCondition.finish_trial(ID);
             currentCondition.print_results(results);
             resetTarget();        
-            if(currentCondition.currentTrial >= currentCondition.numTrials){
+            if(currentCondition.currentTrial >= currentCondition.numTrials-1){
               conditionIndex+=1;
-              if(conditionIndex < conditions.size()){
+              if(conditionIndex < conditions.size()-1){
                  currentCondition = conditions.get(conditionIndex);
                  state = State.INSTRUCTIONS;
                  generateSquares();

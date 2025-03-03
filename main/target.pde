@@ -77,8 +77,8 @@ class Square{
     return this.target;
   }
   
-  boolean is_clicked(int x, int y){
-    return x < this.x1 && x > this.x2 && y > this.y1 && y < this.y2;
+  boolean is_clicked(int x, int y){ 
+    return x > this.x1 && x < this.x2 && y > this.y1 && y < this.y3;
   }
   
   float get_ID(float clickX, float clickY){

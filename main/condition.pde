@@ -20,21 +20,20 @@ class Condition{
       for(int i=0; i<this.numTrials; i++){ this.trials.add(new Trial()); }
   }
   
-  //FIXME: do I use all of these?
   void start_trial_timer(){
-      trials.get(currentTrial-1).startTime = millis();
+      trials.get(currentTrial).startTime = millis();
   }
     
   void end_trial_timer(){
-      trials.get(currentTrial-1).set_elapsed_time();
+      trials.get(currentTrial).set_elapsed_time();
   }
     
   void get_trial_elapsed_time(){
-      trials.get(currentTrial-1).set_elapsed_time();
+      trials.get(currentTrial).set_elapsed_time();
   }
     
   void finish_trial(float ID){
-      trials.get(currentTrial-1).set_ID(ID);
+      trials.get(currentTrial).set_ID(ID);
   }
   
   void update_current_trial(){
