@@ -72,6 +72,24 @@ class Square{
   void set_as_target(){
     this.target = true;
   }
+  
+  boolean is_target(){
+    return this.target;
+  }
+  
+  boolean is_clicked(int x, int y){
+    return x < this.x1 && x > this.x2 && y > this.y1 && y < this.y2;
+  }
+  
+  float get_ID(float clickX, float clickY){
+     //FIXME: fitt's law
+     float d = dist(this.x1, this.y1, clickX, clickY);
+     return log((d/(this.x2 - this.x1))+1) / (float)Math.log(2); // log laws
+   }
+   
+  void set_as_not_target(){
+    this.target = false;
+  }
 }
 
 /////////////////////////GRIDLINE CLASS /////////////////////////////
