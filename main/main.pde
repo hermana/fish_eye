@@ -12,6 +12,14 @@ Table results;
 
 String RESULTS_FILENAME = "./results.csv";
 
+float mouseSpeed;
+float currentDistortion;
+
+float SDDR_SPEED_THRESHOLD_TO_REDUCE_DISTORTION = 10;
+float SDDR_COEFFICIENT_TO_DECREASE_DISTORTION=0.3;
+float SDDR_COEFFICIENT_TO_INCREASE_DISTORTION=0.1;
+
+
 enum State{
   INSTRUCTIONS, 
   TRIAL, 
@@ -27,10 +35,19 @@ void setup() {
 
   state = State.INSTRUCTIONS;
   //String condition_name, int num_trials, float distortion_level, boolean use_sddr 
-  conditions.add(new Condition("Minimal distortion", 5, 0.5, false));
+  
+  //conditions.add(new Condition("No distortion - control", 5, 0, false));
+  //conditions.add(new Condition("Minimal distortion", 5, 0.5, false));
+  //conditions.add(new Condition("Medium distortion", 5, 1, false));
+  //conditions.add(new Condition("High distortion", 5, 3, false));
+  
+  conditions.add(new Condition("SDDR - Minimal distortion", 5, 0.5, true));
+  
+  mouseSpeed=0.0;
   
   conditionIndex=0;
   currentCondition = conditions.get(conditionIndex);
+  currentDistortion = currentCondition.distortion;
   
   size(1080, 1080);
   generateSquares();
@@ -57,13 +74,13 @@ void draw() {
      text("Click to continue.", width/2, (height/2)+250);
      break;
    case TRIAL:
-      float distortion = currentCondition.distortion;
+      currentDistortion = currentCondition.useSDDR ? get_sddr_distortion(currentDistortion, currentCondition.distortion) : currentCondition.distortion;
       for (int i = 0; i < NUM_SQUARES; i++) {
         //FIXME: where to define distortion level.
-        squares.get(i).draw_square(distortion);
+        squares.get(i).draw_square(currentDistortion);
       }
       for (int i = 0; i < gridlines.size(); i++){
-        gridlines.get(i).draw_gridline(distortion);
+        gridlines.get(i).draw_gridline(currentDistortion);
       }
      break;
    case FINISHED:
@@ -89,7 +106,7 @@ void mouseClicked() {
             resetTarget();        
             if(currentCondition.currentTrial >= currentCondition.numTrials-1){
               conditionIndex+=1;
-              if(conditionIndex < conditions.size()-1){
+              if(conditionIndex < conditions.size()){
                  currentCondition = conditions.get(conditionIndex);
                  state = State.INSTRUCTIONS;
                  generateSquares();
@@ -141,6 +158,22 @@ float get_fitts(){
     }
   }
   return 0.0;
+}
+
+float get_sddr_distortion(float d, float maxD){
+  float newDistortion = 0.0;
+  //"speed" - distance in one frame
+  float speed = abs(dist(mouseX, mouseY, pmouseX, pmouseY));
+  if (speed > SDDR_SPEED_THRESHOLD_TO_REDUCE_DISTORTION) { 
+    // If moving fast, decrease distortion
+    newDistortion = d - (SDDR_COEFFICIENT_TO_DECREASE_DISTORTION * d);
+    newDistortion = newDistortion<0 ? 0 : newDistortion;
+  } else { 
+    // If moving slow, increase distortion
+    newDistortion = d + SDDR_COEFFICIENT_TO_INCREASE_DISTORTION * (maxD - newDistortion);
+    newDistortion = newDistortion>maxD ? maxD : newDistortion;
+  }
+  return newDistortion;
 }
 
 
