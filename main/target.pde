@@ -81,10 +81,10 @@ class Square{
     return x > this.x1 && x < this.x2 && y > this.y1 && y < this.y3;
   }
   
-  float get_ID(float clickX, float clickY){
+  float get_ID(float cursorX, float cursorY){
      float x_c = this.x1 + ((this.x2 - this.x1)/2);
      float y_c = this.y1 + ((this.y3 - this.y1)/2);
-     float d = dist(x_c, y_c, clickX, clickY);
+     float d = dist(x_c, y_c, cursorX, cursorY);
      return (float)(Math.log((d/(this.x2 - this.x1))+1) / Math.log(2)); // log laws
    }
    

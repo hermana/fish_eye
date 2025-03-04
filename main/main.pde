@@ -13,6 +13,8 @@ Table results;
 String RESULTS_FILENAME = "./results.csv";
 
 float currentDistortion;
+int cursor_x;
+int cursor_y;
 
 float SDDR_SPEED_THRESHOLD_TO_REDUCE_DISTORTION = 10;
 float SDDR_COEFFICIENT_TO_DECREASE_DISTORTION=0.3;
@@ -97,6 +99,8 @@ void mouseClicked() {
       state = State.TRIAL;
       break;
     case TRIAL: 
+        cursor_x = mouseX;
+        cursor_y = mouseY;
         if(isTargetClicked()){
             currentCondition.end_trial_timer();
             float ID = get_fitts();
@@ -109,6 +113,7 @@ void mouseClicked() {
                  currentCondition = conditions.get(conditionIndex);
                  state = State.INSTRUCTIONS;
                  generateSquares();
+                 resetTarget(); 
               }else{
                 state = State.FINISHED;
               }              
@@ -153,7 +158,7 @@ void resetTarget(){
 float get_fitts(){
   for (Square s: squares){
     if (s.is_target()){
-      return s.get_ID(mouseX, mouseY);
+      return s.get_ID(cursor_x, cursor_y);
     }
   }
   return 0.0;
