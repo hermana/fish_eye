@@ -12,7 +12,6 @@ Table results;
 
 String RESULTS_FILENAME = "./results.csv";
 
-float mouseSpeed;
 float currentDistortion;
 
 float SDDR_SPEED_THRESHOLD_TO_REDUCE_DISTORTION = 10;
@@ -36,14 +35,15 @@ void setup() {
   state = State.INSTRUCTIONS;
   //String condition_name, int num_trials, float distortion_level, boolean use_sddr 
   
-  //conditions.add(new Condition("No distortion - control", 5, 0, false));
-  //conditions.add(new Condition("Minimal distortion", 5, 0.5, false));
-  //conditions.add(new Condition("Medium distortion", 5, 1, false));
-  //conditions.add(new Condition("High distortion", 5, 3, false));
+  conditions.add(new Condition("No distortion - control", 60, 0, false));
+  conditions.add(new Condition("Minimal distortion", 60, 0.5, false));
+  conditions.add(new Condition("Medium distortion", 60, 1, false));
+  conditions.add(new Condition("High distortion", 60, 3, false));
   
-  conditions.add(new Condition("SDDR - Minimal distortion", 5, 0.5, true));
-  
-  mouseSpeed=0.0;
+  conditions.add(new Condition("SDDR - Minimal distortion", 60, 0.5, true));
+  conditions.add(new Condition("SDDR - Medium distortion", 60, 1, false));
+  conditions.add(new Condition("SDDR - High distortion", 60, 3, false));
+
   
   conditionIndex=0;
   currentCondition = conditions.get(conditionIndex);
@@ -58,9 +58,8 @@ void setup() {
   results.addColumn("Trial");
   results.addColumn("ID");
   results.addColumn("Time (ms)");
-  results.addColumn("Errors");
-  results.addColumn("Strength");
-  results.addColumn("Condition Type");
+  results.addColumn("Distortion");
+  results.addColumn("Use SDDR");
 }
 
 void draw() {

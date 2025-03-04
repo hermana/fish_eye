@@ -51,6 +51,6 @@ class Condition{
       newRow.setString("Time (ms)", time);
       newRow.setString("Distortion", str(this.distortion));
       newRow.setString("Use SDDR", str(this.useSDDR));
-      results.addRow(newRow);
+
     }
 }

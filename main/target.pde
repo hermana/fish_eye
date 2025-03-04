@@ -82,9 +82,10 @@ class Square{
   }
   
   float get_ID(float clickX, float clickY){
-     //FIXME: fitt's law
-     float d = dist(this.x1, this.y1, clickX, clickY);
-     return log((d/(this.x2 - this.x1))+1) / (float)Math.log(2); // log laws
+     float x_c = this.x1 + ((this.x2 - this.x1)/2);
+     float y_c = this.y1 + ((this.y3 - this.y1)/2);
+     float d = dist(x_c, y_c, clickX, clickY);
+     return (float)(Math.log((d/(this.x2 - this.x1))+1) / Math.log(2)); // log laws
    }
    
   void set_as_not_target(){
